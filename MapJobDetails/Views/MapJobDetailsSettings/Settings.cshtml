@@ -1,0 +1,217 @@
+﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage<SF.CMS.Widgets.MapJobDetails.Models.Settings>
+
+@using DotNetNuke.Web.Mvc.Helpers
+@using System.Web.Mvc
+@using System.Web.Mvc.Html
+@using DotNetNuke.Web.Client.ClientResourceManagement
+
+@{
+    ClientResourceManager.RegisterStyleSheet(Dnn.DnnPage, "PATH TO DROPZONE.CSS");
+    ClientResourceManager.RegisterScript(Dnn.DnnPage, "PATH TO DROPZONE.MIN.JS", 100);
+}
+
+<h2 id="dnnSitePanel-BasicSettings" class="dnnFormSectionHead"><a href="" class="dnnSectionExpanded">@Dnn.LocalizeString("BasicSettings")</a></h2>
+<fieldset>
+
+    <h1 class="title" align="center">Map</h1>
+
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position:relative; display:inline-block;">
+            @Html.Label("Map Height")
+        </div>
+        <div style="position: relative; width: 20%; display:inline-block;">
+            @Html.TextBoxFor(m => Model.Height, new { @Value = Model.Height })
+            @Html.Label("px")
+        </div>
+    </div>
+
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position:relative; display:inline-block;">
+            @Html.Label("Map Width", new { @class = "col-md-2 control-label" })
+        </div>
+        <div style="position: relative; width: 20%; display:inline-block;">
+            @Html.TextBoxFor(m => Model.Width, new { @Value = Model.Width })
+            @Html.Label("px")
+        </div>
+    </div>
+
+    <h1 class="title" align="center">Job Pushpin</h1>
+
+    <br />
+
+    <br />
+
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position:relative; display:inline-block;">
+            @Html.Label("Job Pushpin Height", new { @class = "col-md-2 control-label" })
+        </div>
+        <div style="position: relative; width: 20%; display:inline-block;">
+            @Html.TextBoxFor(m => Model.JobPushpinHeight, new { @Value = Model.JobPushpinHeight, @width = "30%", @oninput = "jobPushpinHeightChanged()", @id = "jobPushpinHeightTextBox" })
+            @Html.Label("px")
+        </div>
+    </div>
+
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position:relative; display:inline-block;">
+            @Html.Label("Job Pushpin Width", new { @class = "col-md-2 control-label" })
+        </div>
+        <div style="position: relative; width: 20%; display:inline-block;">
+            @Html.TextBoxFor(m => Model.JobPushpinWidth, new { @Value = Model.JobPushpinWidth, @width = "30%", @oninput = "jobPushpinWidthChanged()", @id = "jobPushpinWidthTextBox" })
+            @Html.Label("px")
+        </div>
+    </div>
+
+    <br />
+
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position:relative; display:inline-block">
+            @Html.Label("Job Image", new { @class = "col-md-2 control-label" })
+        </div>
+        <img id="jobImageThumbnail" src="@Model.JobPushpinImageSrc" width="@Model.JobPushpinWidth" height="@Model.JobPushpinHeight" style="margin-right:10px" />
+        <a class="btn btn-blue-light" id="clearJobImage" href="@Url.Action("ClearJobImage", "MapJobDetailsSettings")">Set To Default Icon</a>
+    </div>
+
+    <br />
+
+    <div id="jobImageUpload" class="dropzone needsclick dz-clickable">
+        <div class="dz-message needsclick">
+            Drop <b>job image</b> here or click to upload
+            <br />
+            <span class="note needsclick">
+                <i>Accepted files: .jpeg/jpg .png .gif</i><br />
+                <b>Most recent upload will be set as pushpin image</b><br />
+            </span>
+        </div>
+    </div>
+
+    <br />
+
+    <br />
+
+    <h1 class="title" align="center">User Pushpin</h1>
+
+    <br />
+
+    <br />
+
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position:relative; display:inline-block;">
+            @Html.Label("User Pushpin Height", new { @class = "col-md-2 control-label" })
+        </div>
+        <div style="position: relative; width: 20%; display:inline-block;">
+            @Html.TextBoxFor(m => Model.UserPushpinHeight, new { @Value = Model.UserPushpinHeight, @width = "30%", @oninput = "userPushpinHeightChanged()", @id = "userPushpinHeightTextBox" })
+            @Html.Label("px")
+        </div>
+    </div>
+
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position:relative; display:inline-block;">
+            @Html.Label("User Pushpin Width", new { @class = "col-md-2 control-label" })
+        </div>
+        <div style="position: relative; width: 20%; display:inline-block;">
+            @Html.TextBoxFor(m => Model.UserPushpinWidth, new { @Value = Model.UserPushpinWidth, @width = "30%", @oninput = "userPushpinWidthChanged()", @id = "userPushpinWidthTextBox" })
+            @Html.Label("px")
+        </div>
+    </div>
+
+    <br />
+
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position:relative; display:inline-block">
+            @Html.Label("User Image", new { @class = "col-md-2 control-label" })
+        </div>
+        <img id="userImageThumbnail" src="@Model.UserPushpinImageSrc" width="@Model.UserPushpinWidth" height="@Model.UserPushpinHeight" style="margin-right:10px" />
+        <a class="btn btn-blue-light" id="clearUserImage" href="@Url.Action("ClearUserImage", "MapJobDetailsSettings")">Set To Default Icon</a>
+    </div>
+
+    <br />
+
+    <div id="userImageUpload" class="dropzone needsclick dz-clickable">
+        <div class="dz-message needsclick">
+            Drop <b>user image</b> here or click to upload
+            <br />
+            <span class="note needsclick">
+                <i>Accepted files: .jpeg/jpg .png .gif</i><br />
+                <b>Most recent upload will be set as pushpin image</b><br />
+            </span>
+        </div>
+    </div>
+
+    <script>
+
+        var setJobPushpinHeight = 0;
+        var setJobPushpinWidth = 0;
+
+        var setUserPushpinHeight = 0;
+        var setUserPushpinWidth = 0;
+
+        Dropzone.autoDiscover = false;
+
+        var jobImageDropzone = new Dropzone("#jobImageUpload", {
+            acceptedFiles: "image/jpeg,image/png,image/gif",
+            url: '@Url.Action("UploadJobImage", "MapJobDetailsSettings")',
+            addRemoveLinks: true,
+            success: function (file, response) {
+                //DNN doesn't support any return value other then ActionResult.
+                //JsonResults have html appended to the end, so have to parse that out first.
+                var dnnViewResp = response;
+                dnnViewResp = dnnViewResp.substring(0, dnnViewResp.indexOf("<!DOCTYPE html>"));
+                var data = JSON.parse(dnnViewResp);
+                document.getElementById('jobImageThumbnail').src = "" + data.src;
+            }
+        });
+
+        var userImageDropzone = new Dropzone("#userImageUpload", {
+            acceptedFiles: "image/jpeg,image/png,image/gif",
+            url: '@Url.Action("UploadUserImage", "MapJobDetailsSettings")',
+            addRemoveLinks: true,
+            success: function (file, response) {
+                //DNN doesn't support any return value other then ActionResult.
+                //JsonResults have html appended to the end, so have to parse that out first.
+                var dnnViewResp = response;
+                dnnViewResp = dnnViewResp.substring(0, dnnViewResp.indexOf("<!DOCTYPE html>"));
+                var data = JSON.parse(dnnViewResp);
+                document.getElementById('userImageThumbnail').src = "" + data.src;
+            }
+        });
+
+        jobImageDropzone.on("complete", function (file) {
+            jobImageDropzone.removeFile(file);
+        })
+
+        userImageDropzone.on("complete", function (file) {
+            userImageDropzone.removeFile(file);
+        })
+
+        function jobPushpinWidthChanged() {
+            setJobPushpinWidth = $('#jobPushpinWidthTextBox').val();
+
+            document.getElementById('jobImageThumbnail').setAttribute("width", setJobPushpinWidth);
+
+        }
+
+        function jobPushpinHeightChanged() {
+            setJobPushpinHeight = $('#jobPushpinHeightTextBox').val();
+
+            document.getElementById('jobImageThumbnail').setAttribute("height", setJobPushpinHeight);
+
+        }
+
+        function userPushpinWidthChanged() {
+            setUserPushpinWidth = $('#userPushpinWidthTextBox').val();
+
+            document.getElementById('userImageThumbnail').setAttribute("width", setUserPushpinWidth);
+
+        }
+
+        function userPushpinHeightChanged() {
+            setUserPushpinHeight = $('#userPushpinHeightTextBox').val();
+
+            document.getElementById('userImageThumbnail').setAttribute("height", setUserPushpinHeight);
+
+        }
+
+    </script>
+
+</fieldset>
+

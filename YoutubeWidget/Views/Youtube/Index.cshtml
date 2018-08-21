@@ -1,0 +1,13 @@
+﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage<SF.CMS.Widgets.YoutubeWidget.Models.Settings>
+
+<div class="video-wrapper">
+        <iframe
+                width="@Model.Width"
+                height="@Model.Height"
+                src="@Model.EmbedUrl"
+                frameborder="0"
+                allow="autoplay;
+                encrypted-media"
+                allowfullscreen>
+        </iframe>
+</div>

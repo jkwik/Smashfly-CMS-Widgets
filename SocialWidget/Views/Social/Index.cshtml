@@ -1,0 +1,56 @@
+﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage<SF.CMS.Widgets.SocialWidget.Models.Social>
+
+@{
+    var style = "addthis_" + Model.Dimensions + "_style";
+}
+
+<div class="addthis_toolbox @style" align="@Model.Allignment">
+
+    @if (Model.Orientation.Equals("Vertical"))
+    {
+        foreach (var selection in Model.SelectedServices)
+        {
+            var button = "addthis_button_" + selection;
+            <div>
+                <a class="@button"></a>
+            </div>
+
+        }
+
+        if (Model.CompactButton)
+        {
+            <div>
+                <a class="addthis_button_compact"></a>
+            </div>
+        }
+        if (Model.CounterButton)
+        {
+            <div>
+                <a class="addthis_counter addthis_bubble_style"></a>
+            </div>
+        }
+    }
+    else
+    {
+        foreach (var selection in Model.SelectedServices)
+        {
+            var button = "addthis_button_" + selection;
+            <a class="@button"></a>
+
+        }
+
+        if (Model.CompactButton)
+        {
+            <a class="addthis_button_compact"></a>
+        }
+        if (Model.CounterButton)
+        {
+            <a class="addthis_counter addthis_bubble_style"></a>
+        }
+    }
+
+</div>
+
+<script type="text/javascript">var addthis_config = { "data_track_clickback": true };</script>
+<script type="text/javascript" src="https://s7.addthis.com/js/250/addthis_widget.js#pubid=ADDTHIS_API_KEY"></script>
+

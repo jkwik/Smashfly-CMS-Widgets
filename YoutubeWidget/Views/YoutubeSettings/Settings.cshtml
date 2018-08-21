@@ -1,0 +1,75 @@
+﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage<SF.CMS.Widgets.YoutubeWidget.Models.Settings>
+
+@using DotNetNuke.Web.Mvc.Helpers
+@using System.Web.Mvc
+@using System.Web.Mvc.Html
+
+<h2 id="dnnSitePanel-BasicSettings" class="dnnFormSectionHead"><a href="" class="dnnSectionExpanded">@Dnn.LocalizeString("BasicSettings")</a></h2>
+<fieldset>
+
+    @*Youtube Link Field*@
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position: relative;">
+            @Html.Label("Youtube Link", new { @class = "col-md-2 control-label" })
+        </div>
+        @Html.TextBoxFor(m => Model.Link)
+    </div>
+
+    @*Width field*@
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position: relative;">
+            @Html.Label("Width", new { @class = "col-md-2 control-label" })
+        </div>
+        @Html.TextBoxFor(m => Model.Width)
+    </div>
+
+    @*Height field*@
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position: relative;">
+            @Html.Label("Height", new { @class = "col-md-2 control-label" })
+        </div>
+        @Html.TextBoxFor(m => Model.Height)
+    </div>
+
+    @*Start At Option*@
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position: relative;">
+            @Html.Label("Start At", new { @class = "col-md-2 control-label" })
+        </div>
+        @Html.TextBoxFor(m => Model.StartAt)
+    </div>
+
+    @*Show Suggested Videos Option*@
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position: relative;">
+            @Html.Label("Suggested videos", new { @class = "col-md-2 control-label" })
+        </div>
+        @Html.CheckBoxFor(m => Model.ShowSuggested)
+    </div>
+
+    @*Show Player Controls Option*@
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position: relative;">
+            @Html.Label("Player controls", new { @class = "col-md-2 control-label" })
+        </div>
+        @Html.CheckBoxFor(m => Model.ShowPlayerControls)
+    </div>
+
+    @*Show Video Title & Player Actions Option*@
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position: relative;">
+            @Html.Label("Title & Player Actions", new { @class = "col-md-2 control-label" })
+        </div>
+        @Html.CheckBoxFor(m => Model.ShowVideoTitlePlayerActions)
+    </div>
+
+    @*Enable Privacy-Enhanced Mode Option*@
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position: relative;">
+            @Html.Label("Privacy Enhanced Mode", new { @class = "col-md-2 control-label" })
+        </div>
+        @Html.CheckBoxFor(m => Model.EnablePrivacyEnhancedMode)
+    </div>
+
+</fieldset>
+

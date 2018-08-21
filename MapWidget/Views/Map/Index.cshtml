@@ -1,0 +1,79 @@
+﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage<SF.CMS.Widgets.MapWidget.Models.MapViewModel>
+@using System.Web.Mvc.Html;
+@using DotNetNuke.Web.Mvc.Helpers
+@using System.Web.Mvc.Html
+
+<script src="~/desktopmodules/mvc/MapWidget/Scripts/map.js"
+        JobsApiUrl="@Model.JobsApiUrl"
+        PushpinBase64="@Model.PushpinBase64"
+        PushpinHeight="@Model.PushpinHeight"
+        PushpinWidth="@Model.PushpinWidth"
+        ClusterRadius="@Model.ClusterRadius"
+        ClusterColor="@Model.ClusterColor"
+        ClusterTextColor="@Model.ClusterTextColor"
+        DistanceUnit="@Model.DistanceUnit"
+        MinutesUnit="@Model.MinutesUnit"
+        HoursUnit="@Model.HoursUnit"
+        PolygonFillColor="@Model.PolygonFillColor"
+        PolygonStrokeColor="@Model.PolygonStrokeColor"
+        RadiusSearch="@Model.RadiusSearch"
+        TravelTimeSearch="@Model.TravelTimeSearch"
+        PolygonSearch="@Model.PolygonSearch"
+        >
+</script>
+<script type='text/javascript' defer async src='https://www.bing.com/api/maps/mapcontrol?callback=GetRadiusMap'></script>
+
+<fieldset>
+
+    <ul class="nav nav-tabs nav-justified">
+        <li class="nav-item" id="radiusSearch" onclick="displayForm(this.id)" style="cursor:pointer; border: 1px solid black"><a id="radiusTab" class="nav-link">Radius</a></li>
+        <li class="nav-item" id="travelTimeSearch" onclick="displayForm(this.id)" style="cursor:pointer; border: 1px solid black"><a id="travelTimeTab" class="nav-link">Travel Time</a></li>
+        <li class="nav-item" id="polygonSearch" onclick="displayForm(this.id)" style="cursor:pointer; border: 1px solid black"><a id="polygonTab" class="nav-link">Polygon</a></li>
+    </ul>
+
+    <div id="radiusSearchContainer" style="display:none; margin-top:20px;">
+        <input type="text" id="radiusBox" placeholder="Radius (@Model.DistanceUnit)" />
+    </div>
+
+    <div id="travelTimeSearchContainer" style="display:none; margin-top:20px;">
+        <input type="text" id="travelTimeBoxHours" placeholder="hours" />
+        <input type="text" id="travelTimeBoxMinutes" placeholder="minutes" />
+        <select id="travelMethodBox"></select>
+    </div>
+
+    <div id="polygonSearchContainer" style="display:none; margin-top:20px;" class="form-row align-items-center">
+        <input id="states" />
+        <input id="cities" />
+    </div>
+</fieldset>
+
+
+<div id='searchBoxContainer' style="display:none">
+    <input type='text' id='searchBox' placeholder="Location" onchange="addressChanged(this.value);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange()"/>
+</div>
+
+<div id="errorDiv" style="display:none">
+    <p><font style="color:red" id="errorMessage"></font></p>
+</div>
+
+<div id="mapSearchButtons" style="display:none; justify-content:center; margin-top: 20px">
+    <a class="btn btn-yellow" id="clearSearch" style="font-size:25px; display:inline-block; margin-right:20px" onclick="clearSearch()"> Clear </a>
+    <a class="btn btn-blue-light" id="mapFilter" style="font-size:25px; display:inline-block;"> Search </a>
+</div>
+
+<div id="divMapPartialView" style="margin-top:60px; display:flex; justify-content:center">
+    <div id="myRadiusMap" style="position:relative;width:@Model.Width;height:@Model.Height;">
+        <div id="overlay" style="position:relative; width:100%; height: 100%; background-color: rgba(0,0,0,.9); display:none;z-index:2">
+            <a href="#" id="close-button" style="font-size:24px; color:#fff;">Close</a>
+            <table id="job-list">
+                <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Location</th>
+                    <th>Details</th>
+                    <th>Apply</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

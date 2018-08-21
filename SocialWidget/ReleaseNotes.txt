@@ -1,0 +1,21 @@
+﻿<h3>Social_DNN</h3>
+<p class="Contributor">
+	smashfly.com <br />
+	<a href="mailto:modules@smashfly.com">modules@smashfly.com</a><br />
+	<a href=http://www.smashfly.com>http://www.smashfly.com</a><br />
+</p>
+<hr/>
+<div class="License">
+	<h3>Allows social sharing of current domain over hundreds of platforms.</h3>
+	<p>Module Settings Include: Allignment (Left, Center, Right, Justify), Size (16x16, 20x20, 32x32), and Favorites</p>
+	<p class="Owner">
+		<b>Version 1.0.0.1</b><br /><br />
+	</p>
+	<p>First Release</p>
+	
+	<h4>Bug Fixes</h4>
+	<ul>
+			<li>Need to refresh page after moving or placing a module.</li>
+	</ul>
+	
+</div>

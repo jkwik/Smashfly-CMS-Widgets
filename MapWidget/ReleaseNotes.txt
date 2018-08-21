@@ -1,0 +1,21 @@
+﻿<h3>Social_DNN</h3>
+<p class="Contributor">
+	jkwik <br />
+	<a href="mailto:jkwik@smashfly.com">jkwik@smashfly.com</a><br />
+</p>
+<hr/>
+<div class="License">
+	<h3>Map widget to visually show a clients jobs. Includes radius, travel time, and polygon search</h3>
+	<h3>Settings:</h3>
+	<p>Fully customizable pushpin icon using dropzone, and customizable cluster icon. Ability to choose available searches. Customizable units used.</p>
+	<p class="Owner">
+		<b>Version 1.0.0.1</b><br /><br />
+	</p>
+	<p>First Release</p>
+	
+	<h4>Bug Fixes</h4>
+	<ul>
+			<li>N/A</li>
+	</ul>
+	
+</div>

@@ -1,0 +1,21 @@
+﻿<h3>Social_DNN</h3>
+<p class="Contributor">
+	jkwik <br />
+	<a href="mailto:jkwik@smashfly.com">jkwik@smashfly.com</a><br />
+	<a href=http://www.jkwik.com>http://www.jkwik.com</a><br />
+</p>
+<hr/>
+<div class="License">
+	<h3>[Description of Module/Widget].</h3>
+	<p>[Description of Module/Widget Settings]</p>
+	<p class="Owner">
+		<b>Version 1.0.0.1</b><br /><br />
+	</p>
+	<p>First Release</p>
+	
+	<h4>Bug Fixes</h4>
+	<ul>
+			<li>[List Module/Widget bug fixes]</li>
+	</ul>
+	
+</div>

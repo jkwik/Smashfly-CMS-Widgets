@@ -1,0 +1,285 @@
+﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage<SF.CMS.Widgets.MapWidget.Models.Settings>
+
+@using DotNetNuke.Web.Mvc.Helpers
+@using System.Web.Mvc
+@using System.Web.Mvc.Html
+@using DotNetNuke.Services.FileSystem
+@using DotNetNuke.Web.UI.WebControls
+@using DotNetNuke.Web.Client.ClientResourceManagement
+@using SF.CMS.Widgets.MapWidget.Controllers
+@{
+    ClientResourceManager.RegisterStyleSheet(Dnn.DnnPage, "PATH TO DROPZONE.CSS");
+    ClientResourceManager.RegisterScript(Dnn.DnnPage, "PATH TO DROPZONE.MIN.JS", 100);
+    var diameter = Model.ClusterRadius * 2;
+
+    var displayRadius = 20;
+    var displayDiameter = 40;
+
+    var displayPushpinHeight = 50;
+    var displayPushpinWidth = 50;
+}
+
+<h2 id="dnnSitePanel-BasicSettings" class="dnnFormSectionHead"><a href="" class="dnnSectionExpanded">@Dnn.LocalizeString("BasicSettings")</a></h2>
+<fieldset>
+
+    <h1 class="title" align="center">Map</h1>
+
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position:relative; display:inline-block;">
+            @Html.Label("Map Height")
+        </div>
+        <div style="position: relative; width: 20%; display:inline-block;">
+            @Html.TextBoxFor(m => Model.Height, new { @Value = Model.Height })
+            @Html.Label("px")
+        </div>
+    </div>
+
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position:relative; display:inline-block;">
+            @Html.Label("Map Width", new { @class = "col-md-2 control-label" })
+        </div>
+        <div style="position: relative; width: 20%; display:inline-block;">
+            @Html.TextBoxFor(m => Model.Width, new { @Value = Model.Width })
+            @Html.Label("px")
+        </div>
+    </div>
+
+    <h1 class="title" align="center">Pushpin</h1>
+
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position:relative; display:inline-block">
+            @Html.Label("Pushpin Image", new { @class = "col-md-2 control-label" })
+        </div>
+        <img id="pushpinThumbnail" src="@Model.PushpinImageSrc" width="@Model.PushpinWidth" height="@Model.PushpinHeight" style="margin-right:10px" />
+        <a class="btn btn-blue-light" id="clear" href="@Url.Action("ClearIcon", "MapSettings")">Set To Default Icon</a>
+    </div>
+
+    <br />
+
+    <div id="dZUpload" class="dropzone needsclick dz-clickable">
+        <div class="dz-message needsclick">
+            Drop files here or click to upload
+            <br />
+            <span class="note needsclick">
+                <i>Accepted files: .jpeg/jpg .png .gif</i><br />
+                <b>Most recent upload will be set as pushpin image</b><br />
+            </span>
+        </div>
+    </div>
+
+    <br />
+
+    <br />
+
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position:relative; display:inline-block;">
+            @Html.Label("Pushpin Height", new { @class = "col-md-2 control-label" })
+        </div>
+        <div style="position: relative; width: 20%; display:inline-block;">
+            @Html.TextBoxFor(m => Model.PushpinHeight, new { @Value = Model.PushpinHeight, @width = "30%", @oninput = "pushpinHeightChanged()", @id = "pushpinHeightTextBox" })
+            @Html.Label("px")
+        </div>
+    </div>
+
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position:relative; display:inline-block;">
+            @Html.Label("Pushpin Width", new { @class = "col-md-2 control-label" })
+        </div>
+        <div style="position: relative; width: 20%; display:inline-block;">
+            @Html.TextBoxFor(m => Model.PushpinWidth, new { @Value = Model.PushpinWidth, @width = "30%", @oninput = "pushpinWidthChanged()", @id = "pushpinWidthTextBox" })
+            @Html.Label("px")
+        </div>
+    </div>
+
+    <br />
+
+    <h1 class="title" align="center">Cluster</h1>
+
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position:relative; display:inline-block;">
+            @Html.Label("Cluster Image", new { @class = "col-md-2 control-label" })
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="@displayDiameter" height="@displayDiameter" id="circleSvg">
+            <circle id="clusterIcon" cx="@displayRadius" cy="@displayRadius" r="@displayRadius" fill="@Model.ClusterColor" />
+            <text id="clusterIconText" x="50%" y="50%" stroke="@Model.ClusterTextColor" text-anchor="middle" stroke-width="1px" dy=".3em">15</text>
+        </svg>
+    </div>
+
+    <br />
+
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position:relative; display:inline-block;">
+            @Html.Label("Cluster Icon Size", new { @class = "col-md-2 control-label" })
+        </div>
+        @Html.TextBoxFor(m => Model.ClusterRadius, new { @Value = Model.ClusterRadius, @width = "30%", @oninput = "clusterRadiusChanged()", @id = "clusterRadius" })
+        @Html.Label("px")
+    </div>
+
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position:relative; display:inline-block;">
+            @Html.Label("Cluster Color", new { @class = "col-md-2 control-label" })
+        </div>
+        <input id="clusterColorPicker" name="ClusterColor" />
+    </div>
+
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position:relative; display:inline-block;">
+            @Html.Label("Cluster Text Color", new { @class = "col-md-2 control-label" })
+        </div>
+        <input id="clusterTextColorPicker" name="ClusterTextColor" />
+    </div>
+
+    <h1 class="title" align="center">Units</h1>
+
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position:relative; display:inline-block;">
+            @Html.Label("Distance Unit", new { @class = "col-md-2 control-label" })
+        </div>
+        <div>
+            @Html.Label("Miles")
+            @Html.RadioButtonFor(m => m.DistanceUnit, "miles")
+            @Html.Label("Kilometers")
+            @Html.RadioButtonFor(m => m.DistanceUnit, "kilometers")
+        </div>
+    </div>
+
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position:relative; display:inline-block;">
+            @Html.Label("Time Unit", new { @class = "col-md-2 control-label" })
+        </div>
+        <div>
+            @Html.Label("Minutes")
+            @Html.CheckBoxFor(m => m.MinutesUnit)
+            @Html.Label("Hours")
+            @Html.CheckBoxFor(m => m.HoursUnit)
+        </div>
+    </div>
+
+    <h1 class="title" align="center">Polygon Style</h1>
+
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position:relative; display:inline-block;">
+            @Html.Label("Polygon Fill Color", new { @class = "col-md-2 control-label" })
+        </div>
+        <input id="polygonFillColorPicker" name="PolygonFillColor" />
+    </div>
+
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position:relative; display:inline-block;">
+            @Html.Label("Polygon Stroke Color", new { @class = "col-md-2 control-label" })
+        </div>
+        <input id="polygonStrokeColorPicker" name="PolygonStrokeColor" />
+    </div>
+
+    <h1 class="title" align="center">Searches</h1>
+
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position:relative; display:inline-block;">
+            @Html.Label("Available Searches", new { @class = "col-md-2 control-label" })
+        </div>
+        <div>
+            @Html.Label("Radius")
+            @Html.CheckBoxFor(m => m.RadiusSearch)
+            @Html.Label("Travel Time")
+            @Html.CheckBoxFor(m => m.TravelTimeSearch)
+            @Html.Label("Polygon")
+            @Html.CheckBoxFor(m => m.PolygonSearch)
+        </div>
+    </div>
+
+    <script>
+
+        var setRadius = 0;
+        var setDiameter = 0;
+
+        var setPushpinHeight = 0;
+        var setPushpinWidth = 0;
+
+        Dropzone.autoDiscover = false;
+
+        var dropzone = new Dropzone("#dZUpload", {
+            acceptedFiles: "image/jpeg,image/png,image/gif",
+            url: '@Url.Action("Upload", "MapSettings")',
+            addRemoveLinks: true,
+            success: function (file, response) {
+                //DNN doesn't support any return value other then ActionResult.
+                //JsonResults have html appended to the end, so have to parse that out first.
+                var dnnViewResp = response;
+                dnnViewResp = dnnViewResp.substring(0, dnnViewResp.indexOf("<!DOCTYPE html>"));
+                var data = JSON.parse(dnnViewResp);
+                document.getElementById('pushpinThumbnail').src = "" + data.src;
+            }
+        });
+
+        dropzone.on("complete", function (file) {
+            dropzone.removeFile(file);
+        })
+
+        function clusterColorChanged(e) {
+            var clusterIcon = document.getElementById('clusterIcon');
+            clusterIcon.style.fill = e.value;
+        }
+
+        function clusterTextColorChanged(e) {
+            var clusterIconText = document.getElementById('clusterIconText');
+            clusterIconText.style.stroke = e.value;
+        }
+
+        $(document).ready(function () {
+            $("#clusterColorPicker").kendoColorPicker({
+                value: "@Model.ClusterColor",
+                buttons: false,
+                select: clusterColorChanged
+            });
+
+            $("#clusterTextColorPicker").kendoColorPicker({
+                value: "@Model.ClusterTextColor",
+                buttons: false,
+                select: clusterTextColorChanged
+            });
+
+            $("#polygonFillColorPicker").kendoColorPicker({
+                value: "@Model.PolygonFillColor",
+                buttons: false
+            });
+
+            $("#polygonStrokeColorPicker").kendoColorPicker({
+                value: "@Model.PolygonStrokeColor",
+                buttons: false
+            });
+
+            clusterRadiusChanged();
+            pushpinWidthChanged();
+            pushpinHeightChanged();
+
+        })
+
+        function clusterRadiusChanged() {
+            setRadius = $('#clusterRadius').val();
+            setDiameter = setRadius * 2;
+
+            document.getElementById('clusterIcon').setAttribute("r", setRadius);
+            document.getElementById('clusterIcon').setAttribute("cx", setRadius);
+            document.getElementById('clusterIcon').setAttribute("cy", setRadius);
+            document.getElementById('circleSvg').setAttribute("width", setDiameter);
+            document.getElementById('circleSvg').setAttribute("height", setDiameter);
+
+        }
+
+        function pushpinWidthChanged() {
+            setPushpinWidth = $('#pushpinWidthTextBox').val();
+
+            document.getElementById('pushpinThumbnail').setAttribute("width", setPushpinWidth);
+
+        }
+
+        function pushpinHeightChanged() {
+            setPushpinHeight = $('#pushpinHeightTextBox').val();
+
+            document.getElementById('pushpinThumbnail').setAttribute("height", setPushpinHeight);
+
+        }
+
+    </script>
+
+</fieldset>

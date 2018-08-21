@@ -1,0 +1,77 @@
+﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage<SF.CMS.Widgets.SocialWidget.Models.Settings>
+
+@using DotNetNuke.Web.Mvc.Helpers
+@using System.Web.Mvc
+@using System.Web.Mvc.Html
+
+<h2 id="dnnSitePanel-BasicSettings" class="dnnFormSectionHead"><a href="" class="dnnSectionExpanded">@Dnn.LocalizeString("BasicSettings")</a></h2>
+<fieldset>
+
+    @*Compact Button Option*@
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position: relative;">
+            @Html.Label("Compact Button", new { @class = "col-md-2 control-label" })
+        </div>
+        @Html.CheckBoxFor(m => m.CompactButton)
+    </div>
+
+    @*Counter Button Option*@
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position: relative;">
+            @Html.Label("Counter Button", new { @class = "col-md-2 control-label" })
+        </div>
+        @Html.CheckBoxFor(m => m.CounterButton)
+    </div>
+
+    @*Allignment Options.*@
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position: relative;">
+            @Html.LabelFor(m => Model.Allignment, new { @class = "col-md-2 control-label" })
+        </div>
+        @Html.DropDownListFor(m => Model.Allignment,
+            new SelectList(Model.AllignmentOptions, "Allignment"))
+    </div>
+
+    @*Dimension Options*@
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position: relative;">
+            @Html.LabelFor(m => Model.Dimensions, new { @class = "col-md-2 control-label" })
+        </div>
+        @Html.DropDownListFor(m => Model.Dimensions,
+            new SelectList(Model.DimensionsOptions, "Dimensions"))
+    </div>
+
+    @*Favorite Services Option*@
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position: relative;">
+            @Html.Label("Favorite Services", new { @class = "col-md-2 control-label" })
+        </div>
+        @Html.ListBoxFor(m => m.SelectedServices, new MultiSelectList(Model.ServicesCollection, "code", "name",
+            Model.SelectedServices), new { id = "multiSelectDropDown", multiple = "multiple"})
+    </div>
+
+    <br />
+
+    @*Orientation Options*@
+    <div class="dnnFormItem">
+        <div class="dnnLabel" style="position:relative;">
+            @Html.LabelFor(m => m.Orientation, new { @class = "col-md-2 control-label" })
+        </div>
+        @Html.DropDownListFor(m => Model.Orientation,
+            new SelectList(Model.OrientationOptions, "Orientation"))
+    </div>
+
+    @*Scripts for Chosen jquery plugin.*@
+    @section scripts {
+
+        <script>
+            $(function () {
+                //multiselect dropdown
+                $("#multiSelectDropDown").chosen();
+            });
+        </script>
+
+    }
+
+</fieldset>
+

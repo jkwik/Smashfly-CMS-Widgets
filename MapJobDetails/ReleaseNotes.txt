@@ -1,0 +1,19 @@
+﻿<h3>Social_DNN</h3>
+<p class="Contributor">
+	SmashFly <br />
+</p>
+<hr/>
+<div class="License">
+	<h3>To be put on a job description page where the jobid is taken from the url.</h3>
+	<p>Fully customizable user and job location pushpin and map size.</p>
+	<p class="Owner">
+		<b>Version 1.0.0.1</b><br /><br />
+	</p>
+	<p>First Release</p>
+	
+	<h4>Bug Fixes</h4>
+	<ul>
+			<li>[List Module/Widget bug fixes]</li>
+	</ul>
+	
+</div>

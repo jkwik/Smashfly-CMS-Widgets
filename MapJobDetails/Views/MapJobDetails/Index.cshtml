@@ -1,0 +1,18 @@
+﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage<SF.CMS.Widgets.MapJobDetails.Models.MapViewModel>
+
+<script src="~/desktopmodules/mvc/MapJobDetails/Scripts/mapjobdetails.js"
+        Latitude="@Model.JobLatitude"
+        Longitude="@Model.JobLongitude"
+        JobPushpinBase64="@Model.JobPushpinImageSrc"
+        JobPushpinHeight="@Model.JobPushpinHeight"
+        JobPushpinWidth="@Model.JobPushpinWidth"
+        UserPushpinBase64="@Model.UserPushpinImageSrc"
+        UserPushpinHeight="@Model.UserPushpinHeight"
+        UserPushpinWidth="@Model.UserPushpinWidth"
+        >
+</script>
+<script type='text/javascript' defer async src='https://www.bing.com/api/maps/mapcontrol?callback=LoadJobMap'></script>
+
+<div id="divMapPartialView" style="margin-top:60px; display:flex; justify-content:center">
+    <div id="jobMap" style="position:relative;width:@Model.MapWidth;height:@Model.MapHeight;"></div>
+</div>
